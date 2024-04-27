@@ -103,30 +103,41 @@ public class ForgeInventoryItemRendererListener {
     }
 
     private static void drawIcon(int x, int y, int iconSize, ItemStack itemStack, int slotIndex, int selectedSlotIndex) {
+        // ブレンドを有効にし、GUIの標準アイテムライティングを有効にします
         GlStateManager.enableBlend();
         RenderHelper.enableGUIStandardItemLighting();
 
-        GlStateManager.pushMatrix(); // 現在の行列を保存
-        GlStateManager.scale(iconSize / 16.0F, iconSize / 16.0F, 1.0F); // スケーリング
-        mc.getRenderItem().renderItemAndEffectIntoGUI(itemStack, (int) (x / (iconSize / 16.0F)), (int) (y / (iconSize / 16.0F))); // スケーリングを考慮して描画
-        GlStateManager.popMatrix(); // 行列を元に戻す
+         // 現在の行列を保存し、スケーリングを行います
+        GlStateManager.pushMatrix();
+        GlStateManager.scale(iconSize / 16.0F, iconSize / 16.0F, 1.0F);
+         // スケーリングを考慮してアイテムをGUIに描画します
+        mc.getRenderItem().renderItemAndEffectIntoGUI(itemStack, (int) (x / (iconSize / 16.0F)), (int) (y / (iconSize / 16.0F)));
+         // 行列を元に戻します
+        GlStateManager.popMatrix();
 
+        // 標準アイテムライティングを無効にし、ブレンドを無効にします
         RenderHelper.disableStandardItemLighting();
         GlStateManager.disableBlend();
 
-        // ホットバーが選択されている場合、白い枠を描画
+        // ホットバーが選択されている場合、白い枠を描画します
         if (slotIndex == selectedSlotIndex) {
+            // スクリーンの幅と高さを取得します
             ScaledResolution scaledResolution = new ScaledResolution(mc);
             int screenWidth = scaledResolution.getScaledWidth();
             int screenHeight = scaledResolution.getScaledHeight();
 
+            // 白い縁のテクスチャをバインドし、白い縁を描画します
             mc.getTextureManager().bindTexture(WHITE_BORDER_TEXTURE);
-            mc.ingameGUI.drawTexturedModalRect(x, y, 0, 0, 16, 16); // 白い縁の描画
+            mc.ingameGUI.drawTexturedModalRect(x, y, 0, 0, 16, 16);
+
+            // テクスチャの回転を行います
             GlStateManager.pushMatrix();
-            GlStateManager.scale(iconSize / 16.0F, iconSize / 16.0F, 1.0F); // スケーリング
-            GlStateManager.translate(x + (float) screenWidth / 2, y + (float) screenHeight / 2, 0); // 回転の中心を設定
-            GlStateManager.rotate(45, 0, 0, 1); // Z軸周りに45度回転
-            GlStateManager.translate(-(x + (float) screenWidth / 2), -(y + (float) screenHeight / 2), 0); // 描画位置を元に戻す
+            GlStateManager.scale(iconSize / 16.0F, iconSize / 16.0F, 1.0F);
+            // 回転の中心を設定し、Z軸周りに45度回転します
+            GlStateManager.translate(x + (float) screenWidth / 2, y + (float) screenHeight / 2, 0);
+            GlStateManager.rotate(45, 0, 0, 1);
+            GlStateManager.translate(-(x + (float) screenWidth / 2), -(y + (float) screenHeight / 2), 0);
+            // 回転したテクスチャを描画します
             Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect(x, y, 0, 0, (int) (x / (iconSize / 16.0F)), (int) (y / (iconSize / 16.0F)));
             GlStateManager.popMatrix();
             GlStateManager.enableBlend();
