@@ -112,6 +112,7 @@ public class ForgeInventoryItemRendererListener {
         GlStateManager.popMatrix(); // 行列を元に戻す
 
         RenderHelper.disableStandardItemLighting();
+        GlStateManager.disableBlend();
 
         // ホットバーが選択されている場合、白い枠を描画
         if (slotIndex == selectedSlotIndex) {
@@ -119,18 +120,16 @@ public class ForgeInventoryItemRendererListener {
             int screenWidth = scaledResolution.getScaledWidth();
             int screenHeight = scaledResolution.getScaledHeight();
 
-            GlStateManager.disableBlend();
             mc.getTextureManager().bindTexture(WHITE_BORDER_TEXTURE);
             mc.ingameGUI.drawTexturedModalRect(x, y, 0, 0, 16, 16); // 白い縁の描画
             GlStateManager.pushMatrix();
+            GlStateManager.scale(iconSize / 16.0F, iconSize / 16.0F, 1.0F); // スケーリング
             GlStateManager.translate(x + (float) screenWidth / 2, y + (float) screenHeight / 2, 0); // 回転の中心を設定
             GlStateManager.rotate(45, 0, 0, 1); // Z軸周りに45度回転
             GlStateManager.translate(-(x + (float) screenWidth / 2), -(y + (float) screenHeight / 2), 0); // 描画位置を元に戻す
-            Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect(x, y, 0, 0, screenWidth, screenHeight);
+            Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect(x, y, 0, 0, (int) (x / (iconSize / 16.0F)), (int) (y / (iconSize / 16.0F)));
             GlStateManager.popMatrix();
             GlStateManager.enableBlend();
-        } else {
-            GlStateManager.disableBlend();
         }
     }
 
