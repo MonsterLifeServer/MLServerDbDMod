@@ -27,6 +27,14 @@ public class ForgeInventoryItemRendererListener {
     private static final ResourceLocation WHITE_BORDER_TEXTURE =
             new ResourceLocation(MLServerDbDMod.MODID, "textures/dbdgui/unknown.png"); // 白い縁のテクスチャ
 
+    private static final int PARK_SIZE = 32; // アイコンのサイズ
+    private static final int ITEM_SIZE = 28; // アイコンのサイズ
+    private static final int ADDON_SIZE = 14; // アイコンのサイズ
+    private static final int PADDING_RIGHT = 5;
+    private static final int PADDING_BOTTOM = 5;
+    private static final int PADDING_LEFT = 5; 
+    
+    
     @SubscribeEvent
     public static void onRenderTick(TickEvent.RenderTickEvent event) {
         if (event.phase != TickEvent.Phase.END || mc.currentScreen != null) return; // インベントリが開かれていないことを確認
@@ -34,10 +42,6 @@ public class ForgeInventoryItemRendererListener {
         ScaledResolution scaledResolution = new ScaledResolution(mc);
         int screenWidth = scaledResolution.getScaledWidth();
         int screenHeight = scaledResolution.getScaledHeight();
-
-        int iconSize = 32; // アイコンのサイズ
-        int padding_right = 5; // アイコン間の余白
-        int padding_bottom = 5; // アイコン間の余白
 
         int x, y, temp;
 
@@ -47,71 +51,102 @@ public class ForgeInventoryItemRendererListener {
         ItemStack itemStack = mc.player.inventory.getStackInSlot(slotIndex); // インベントリの0番目のスロットからアイテムを取得
         if (!itemStack.isEmpty()) { // アイテムが存在する場合
             // アイコンを描画する位置を計算
-            x = screenWidth - iconSize - padding_right;
-            y = screenHeight - iconSize - padding_bottom;
+            x = screenWidth - PARK_SIZE - PADDING_RIGHT;
+            y = screenHeight - PARK_SIZE - PADDING_BOTTOM;
 
-            temp = iconSize / 2;
+            temp = PARK_SIZE / 2;
 
             x -= temp;
-            y -= iconSize;
+            y -= PARK_SIZE;
 
-            drawIcon(x, y, iconSize, itemStack, slotIndex, selectedSlotIndex);
+            drawIcon(x, y, PARK_SIZE, itemStack, slotIndex, selectedSlotIndex);
         }
 
         slotIndex = 1;
         itemStack = mc.player.inventory.getStackInSlot(slotIndex); // インベントリの0番目のスロットからアイテムを取得
         if (!itemStack.isEmpty()) { // アイテムが存在する場合
             // アイコンを描画する位置を計算
-            x = screenWidth - iconSize - padding_right;
-            y = screenHeight - iconSize - padding_bottom;
+            x = screenWidth - PARK_SIZE - PADDING_RIGHT;
+            y = screenHeight - PARK_SIZE - PADDING_BOTTOM;
 
-            temp = iconSize / 2;
+            temp = PARK_SIZE / 2;
 
             y -= temp;
 
-            drawIcon(x, y, iconSize, itemStack, slotIndex, selectedSlotIndex);
+            drawIcon(x, y, PARK_SIZE, itemStack, slotIndex, selectedSlotIndex);
         }
 
         slotIndex = 2;
         itemStack = mc.player.inventory.getStackInSlot(slotIndex); // インベントリの0番目のスロットからアイテムを取得
         if (!itemStack.isEmpty()) { // アイテムが存在する場合
             // アイコンを描画する位置を計算
-            x = screenWidth - iconSize - padding_right;
-            y = screenHeight - iconSize - padding_bottom;
+            x = screenWidth - PARK_SIZE - PADDING_RIGHT;
+            y = screenHeight - PARK_SIZE - PADDING_BOTTOM;
 
-            temp = iconSize / 2;
+            temp = PARK_SIZE / 2;
 
             x -= temp;
 
-            drawIcon(x, y, iconSize, itemStack, slotIndex, selectedSlotIndex);
+            drawIcon(x, y, PARK_SIZE, itemStack, slotIndex, selectedSlotIndex);
         }
 
         slotIndex = 3;
         itemStack = mc.player.inventory.getStackInSlot(slotIndex); // インベントリの0番目のスロットからアイテムを取得
         if (!itemStack.isEmpty()) { // アイテムが存在する場合
             // アイコンを描画する位置を計算
-            x = screenWidth - iconSize - padding_right;
-            y = screenHeight - iconSize - padding_bottom;
+            x = screenWidth - PARK_SIZE - PADDING_RIGHT;
+            y = screenHeight - PARK_SIZE - PADDING_BOTTOM;
 
-            temp = iconSize / 2;
+            temp = PARK_SIZE / 2;
 
-            x -= iconSize;
+            x -= PARK_SIZE;
             y -= temp;
 
-            drawIcon(x, y, iconSize, itemStack, slotIndex, selectedSlotIndex);
+            drawIcon(x, y, PARK_SIZE, itemStack, slotIndex, selectedSlotIndex);
+        }
+
+        slotIndex = 8;
+        itemStack = mc.player.inventory.getStackInSlot(slotIndex); // インベントリの0番目のスロットからアイテムを取得
+        if (!itemStack.isEmpty()) { // アイテムが存在する場合
+            // アイコンを描画する位置を計算
+            x = PADDING_LEFT + (ITEM_SIZE / 2);
+            y = screenHeight - PADDING_BOTTOM - ITEM_SIZE;
+
+            drawIcon(x, y, ITEM_SIZE, itemStack, slotIndex, selectedSlotIndex);
+        }
+
+        slotIndex = 26;
+        itemStack = mc.player.inventory.getStackInSlot(slotIndex);
+        if (!itemStack.isEmpty()) { // アイテムが存在する場合
+            // アイコンを描画する位置を計算
+            x = PADDING_LEFT + ITEM_SIZE + (ADDON_SIZE / 2);
+            y = screenHeight - (PADDING_BOTTOM + (ADDON_SIZE / 2));
+
+            drawIcon(x, y, ADDON_SIZE, itemStack, slotIndex, -1);
+        }
+
+        slotIndex = 35;
+        itemStack = mc.player.inventory.getStackInSlot(slotIndex);
+        if (!itemStack.isEmpty()) { // アイテムが存在する場合
+            // アイコンを描画する位置を計算
+            x = PADDING_LEFT + ITEM_SIZE + (ADDON_SIZE / 2);
+            y = screenHeight - (PADDING_BOTTOM + ADDON_SIZE + (ADDON_SIZE / 2));
+
+            drawIcon(x, y, ADDON_SIZE, itemStack, slotIndex, -1);
         }
     }
 
-    private static void drawIcon(int x, int y, int iconSize, ItemStack itemStack, int slotIndex, int selectedSlotIndex) {
+    private static void drawIcon(int x, int y, int icon_size, ItemStack itemStack, int slotIndex, int selectedSlotIndex) {
         // ブレンドを有効にし、GUIの標準アイテムライティングを有効にします
         GlStateManager.enableBlend();
         RenderHelper.enableGUIStandardItemLighting();
 
          // 現在の行列を保存し、スケーリングを行います
         GlStateManager.pushMatrix();
-        GlStateManager.scale(iconSize / 16.0F, iconSize / 16.0F, 1.0F);
+        if (slotIndex == selectedSlotIndex) icon_size += 2;
+        GlStateManager.scale(icon_size / 16.0F, icon_size / 16.0F, 1.0F);
          // スケーリングを考慮してアイテムをGUIに描画します
-        mc.getRenderItem().renderItemAndEffectIntoGUI(itemStack, (int) (x / (iconSize / 16.0F)), (int) (y / (iconSize / 16.0F)));
+        mc.getRenderItem().renderItemAndEffectIntoGUI(itemStack, (int) (x / (icon_size / 16.0F)), (int) (y / (icon_size / 16.0F)));
          // 行列を元に戻します
         GlStateManager.popMatrix();
 
@@ -119,29 +154,29 @@ public class ForgeInventoryItemRendererListener {
         RenderHelper.disableStandardItemLighting();
         GlStateManager.disableBlend();
 
-        // ホットバーが選択されている場合、白い枠を描画します
-        if (slotIndex == selectedSlotIndex) {
-            // スクリーンの幅と高さを取得します
-            ScaledResolution scaledResolution = new ScaledResolution(mc);
-            int screenWidth = scaledResolution.getScaledWidth();
-            int screenHeight = scaledResolution.getScaledHeight();
-
-            // 白い縁のテクスチャをバインドし、白い縁を描画します
-            mc.getTextureManager().bindTexture(WHITE_BORDER_TEXTURE);
-            mc.ingameGUI.drawTexturedModalRect(x, y, 0, 0, 16, 16);
-
-            // テクスチャの回転を行います
-            GlStateManager.pushMatrix();
-            GlStateManager.scale(iconSize / 16.0F, iconSize / 16.0F, 1.0F);
-            // 回転の中心を設定し、Z軸周りに45度回転します
-            GlStateManager.translate(x + (float) screenWidth / 2, y + (float) screenHeight / 2, 0);
-            GlStateManager.rotate(45, 0, 0, 1);
-            GlStateManager.translate(-(x + (float) screenWidth / 2), -(y + (float) screenHeight / 2), 0);
-            // 回転したテクスチャを描画します
-            Minecraft.getMinecraft().ingameGUI.drawTexturedModalRect(x, y, 0, 0, (int) (x / (iconSize / 16.0F)), (int) (y / (iconSize / 16.0F)));
-            GlStateManager.popMatrix();
-            GlStateManager.enableBlend();
-        }
+//        // ホットバーが選択されている場合、白い枠を描画します
+//        if (slotIndex == selectedSlotIndex) {
+//            // スクリーンの幅と高さを取得します
+//            ScaledResolution scaledResolution = new ScaledResolution(mc);
+//            int screenWidth = scaledResolution.getScaledWidth();
+//            int screenHeight = scaledResolution.getScaledHeight();
+//
+//            // 白い縁のテクスチャをバインドし、白い縁を描画します
+//            mc.getTextureManager().bindTexture(WHITE_BORDER_TEXTURE);
+//            mc.ingameGUI.drawTexturedModalRect(x, y, 0, 0, (int) (x / ((PARK_SIZE + 4) / 16.0F)), (int) (y / ((PARK_SIZE + 4) / 16.0F)));
+//
+//            // テクスチャの回転を行います
+//            //GlStateManager.pushMatrix();
+//            GlStateManager.scale(PARK_SIZE / 16.0F, PARK_SIZE / 16.0F, 1.0F);
+//            // 回転の中心を設定し、Z軸周りに45度回転します
+//            GlStateManager.translate(x + (float) screenWidth / 2, y + (float) screenHeight / 2, 0);
+//            GlStateManager.rotate(45, 0f, 0f, 1f);
+//            GlStateManager.color(255f, 255f, 255f, 255f);
+//            GlStateManager.translate(-(x + (float) screenWidth / 2), -(y + (float) screenHeight / 2), 0);
+//            // 回転したテクスチャを描画します
+//            GlStateManager.popMatrix();
+//            GlStateManager.enableBlend();
+//        }
     }
 
 }
