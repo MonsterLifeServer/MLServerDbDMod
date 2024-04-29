@@ -55,7 +55,7 @@ public class ForgeInventoryItemRendererListener {
     private static final int ADDON_SIZE = 14; // アイコンのサイズ
     private static final int PADDING_RIGHT = 5;
     private static final int PADDING_BOTTOM = 5;
-    private static final int PADDING_LEFT = 5; 
+    private static final int PADDING_LEFT = 20;
     
     
     @SubscribeEvent
@@ -137,7 +137,13 @@ public class ForgeInventoryItemRendererListener {
 
             drawIcon(x, y, ITEM_SIZE, itemStack, slotIndex, selectedSlotIndex);
 
-            mc.getRenderManager().getFontRenderer().drawString("Your text", 100, 100, 0xFFFFFF);
+            x -= 20;
+            y += 20;
+            try {
+                mc.getRenderManager().getFontRenderer().drawString("100%", x, y, 0xFFFFFF);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         slotIndex = 35;
