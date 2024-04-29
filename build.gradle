@@ -97,6 +97,9 @@ jar {
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
         ])
     }
+    from(sourceSets.main.resources) {
+        into "assets/${archivesBaseName}" // modidはModのIDに置き換えてください
+    }
 }
 
 // Example configuration to allow publishing using the maven-publish task
@@ -114,6 +117,15 @@ publishing {
     repositories {
         maven {
             url "file:///${project.projectDir}/mcmodsrepo"
+        }
+    }
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDir 'src/main/resources'
+            exclude '**/*.java'
         }
     }
 }

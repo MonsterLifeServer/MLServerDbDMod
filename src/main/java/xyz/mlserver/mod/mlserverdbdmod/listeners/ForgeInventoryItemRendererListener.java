@@ -1,6 +1,8 @@
 package xyz.mlserver.mod.mlserverdbdmod.listeners;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
@@ -23,9 +25,30 @@ public class ForgeInventoryItemRendererListener {
 
     private static final Minecraft mc = Minecraft.getMinecraft();
     private static final ResourceLocation TEXTURE_LOCATION =
-            new ResourceLocation(MLServerDbDMod.MODID, "textures/dbdgui/icon.png"); // テクスチャの場所を指定
+            new ResourceLocation(MLServerDbDMod.MODID + ":textures/dbdgui/icon.png"); // テクスチャの場所を指定
     private static final ResourceLocation WHITE_BORDER_TEXTURE =
-            new ResourceLocation(MLServerDbDMod.MODID, "textures/dbdgui/unknown.png"); // 白い縁のテクスチャ
+            new ResourceLocation(MLServerDbDMod.MODID + ":textures/dbdgui/unknown.png"); // 白い縁のテクスチャ
+
+    private static final ResourceLocation ITEM_PROGRESS_BAR_TEXTURE_100 =
+            new ResourceLocation(MLServerDbDMod.MODID + ":textures/dbdgui/item_progressbar/item_progress_bar_0.png");
+    private static final ResourceLocation ITEM_PROGRESS_BAR_TEXTURE_87_5 =
+            new ResourceLocation(MLServerDbDMod.MODID + ":textures/dbdgui/item_progressbar/item_progress_bar_1.png");
+    private static final ResourceLocation ITEM_PROGRESS_BAR_TEXTURE_75 =
+            new ResourceLocation(MLServerDbDMod.MODID + ":textures/dbdgui/item_progressbar/item_progress_bar_2.png");
+    private static final ResourceLocation ITEM_PROGRESS_BAR_TEXTURE_62_5 =
+            new ResourceLocation(MLServerDbDMod.MODID + ":textures/dbdgui/item_progressbar/item_progress_bar_3.png");
+    private static final ResourceLocation ITEM_PROGRESS_BAR_TEXTURE_50 =
+            new ResourceLocation(MLServerDbDMod.MODID + ":textures/dbdgui/item_progressbar/item_progress_bar_4.png");
+    private static final ResourceLocation ITEM_PROGRESS_BAR_TEXTURE_37_5 =
+            new ResourceLocation(MLServerDbDMod.MODID + ":textures/dbdgui/item_progressbar/item_progress_bar_5.png");
+    private static final ResourceLocation ITEM_PROGRESS_BAR_TEXTURE_25 =
+            new ResourceLocation(MLServerDbDMod.MODID + ":textures/dbdgui/item_progressbar/item_progress_bar_6.png");
+    private static final ResourceLocation ITEM_PROGRESS_BAR_TEXTURE_12_5 =
+            new ResourceLocation(MLServerDbDMod.MODID + ":textures/dbdgui/item_progressbar/item_progress_bar_7.png");
+    private static final ResourceLocation ITEM_PROGRESS_BAR_TEXTURE_0 =
+            new ResourceLocation(MLServerDbDMod.MODID + ":textures/dbdgui/item_progressbar/item_progress_bar_8.png");
+    private static final ResourceLocation ITEM_PROGRESS_BAR_TEXTURE =
+            new ResourceLocation(MLServerDbDMod.MODID,  "textures/gui/item_progress_bar.png");
 
     private static final int PARK_SIZE = 32; // アイコンのサイズ
     private static final int ITEM_SIZE = 28; // アイコンのサイズ
@@ -113,6 +136,8 @@ public class ForgeInventoryItemRendererListener {
             y = screenHeight - (PADDING_BOTTOM + ITEM_SIZE);
 
             drawIcon(x, y, ITEM_SIZE, itemStack, slotIndex, selectedSlotIndex);
+
+            mc.getRenderManager().getFontRenderer().drawString("Your text", 100, 100, 0xFFFFFF);
         }
 
         slotIndex = 35;
