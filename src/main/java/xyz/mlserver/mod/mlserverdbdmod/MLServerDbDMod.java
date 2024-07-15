@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.client.FMLConfigGuiFactory;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
@@ -18,11 +19,18 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import org.apache.logging.log4j.Logger;
+import xyz.mlserver.mod.mlserverdbdmod.listeners.ForgeConfigChangeListener;
+import xyz.mlserver.mod.mlserverdbdmod.listeners.ForgeGuiOpenListener;
 import xyz.mlserver.mod.mlserverdbdmod.listeners.ForgeInventoryItemRendererListener;
 
-@Mod(modid = MLServerDbDMod.MODID, name = MLServerDbDMod.NAME, version = MLServerDbDMod.VERSION)
-public class MLServerDbDMod
-{
+
+@Mod(
+        modid = MLServerDbDMod.MODID,
+        name = MLServerDbDMod.NAME,
+        version = MLServerDbDMod.VERSION,
+        guiFactory = "xyz.mlserver.mod.mlserverdbdmod.utils.GuiFactoryMLServerDbDMod"
+)
+public class MLServerDbDMod {
     public static final String MODID = "mlserverdbdmod";
     public static final String NAME = "MLServer DbD Mod";
     public static final String VERSION = "1.0.0";
@@ -41,7 +49,8 @@ public class MLServerDbDMod
     public void init(FMLInitializationEvent event) {
         // some example code
         ForgeInventoryItemRendererListener listener = new ForgeInventoryItemRendererListener();
-        // FMLCommonHandler.instance().bus().register(new ForgeServerLoginListener());
+        FMLCommonHandler.instance().bus().register(new ForgeConfigChangeListener());
+        FMLCommonHandler.instance().bus().register(new ForgeGuiOpenListener());
 
         loader = Loader.instance();
     }
